@@ -1,5 +1,4 @@
 package dataManagePackage;
-import dataManagePackage.Receipt.*;
 import inputManagePackage.*;
 import outputManagePackage.*;
 

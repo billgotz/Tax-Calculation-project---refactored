@@ -37,7 +37,7 @@ public class InputSystem {
 		String taxpayerAFM = getParameterValueFromTxtFileLine(inputStream.nextLine(), "AFM: ");
 		String taxpayerStatus = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Status: ");
 		String taxpayerIncome = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Income: ");
-		Taxpayer newTaxpayer = new Taxpayer(taxpayerName, taxpayerAFM, taxpayerStatus, taxpayerIncome);
+		Taxpayer newTaxpayer = new Taxpayer(taxpayerName, taxpayerAFM, taxpayerIncome, taxpayerStatus);
 		
 		String fileLine;
 		while (inputStream.hasNextLine())
@@ -83,7 +83,7 @@ public class InputSystem {
 		String taxpayerAFM = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<AFM> ", " </AFM>");
 		String taxpayerStatus = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<Status> ", " </Status>");
 		String taxpayerIncome = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<Income> ", " </Income>");
-		Taxpayer newTaxpayer = new Taxpayer(taxpayerName, taxpayerAFM, taxpayerStatus, taxpayerIncome);
+		Taxpayer newTaxpayer = new Taxpayer(taxpayerName, taxpayerAFM, taxpayerIncome, taxpayerStatus);
 		
 		String fileLine;
 		while (inputStream.hasNextLine())
