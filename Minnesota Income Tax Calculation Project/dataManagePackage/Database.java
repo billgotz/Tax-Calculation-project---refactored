@@ -1,7 +1,7 @@
 package dataManagePackage;
+
 import inputManagePackage.*;
 import outputManagePackage.*;
-
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
@@ -20,7 +20,11 @@ public class Database {
 	}
 	
 	public static void proccessTaxpayersDataFromFilesIntoDatabase(String afmInfoFilesFolderPath, List<String> taxpayersAfmInfoFiles){
-		InputSystem.addTaxpayersDataFromFilesIntoDatabase(afmInfoFilesFolderPath, taxpayersAfmInfoFiles);
+		
+		for (String file : taxpayersAfmInfoFiles) {
+			String extension = file.substring(file.lastIndexOf(".") + 1);
+			ParseFactory.createParser(extension, afmInfoFilesFolderPath, file);
+		}
 	}
 	
 	public static void addTaxpayerToList(Taxpayer taxpayer){
