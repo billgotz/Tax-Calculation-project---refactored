@@ -1,5 +1,4 @@
 package dataManagePackage;
-import dataManagePackage.Receipt.Receipt;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

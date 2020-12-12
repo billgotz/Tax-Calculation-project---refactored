@@ -1,7 +1,5 @@
 package gui;
 import dataManagePackage.*;
-import dataManagePackage.Receipt.*;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -186,7 +184,7 @@ public class InsertNewReceiptJDialog extends JDialog {
 						&& !amountTextField.getText().equals("") && !companyTextField.getText().equals("") && !countryTextField.getText().equals("")
 						&& !cityTextField.getText().equals("") && !streetTextField.getText().equals("") && !numberTextField.getText().equals("")){
 
-					Receipt newReceipt = ReceiptFactory.createNewReceipt(kindComboBox.getSelectedItem().toString(), receiptIdTextField.getText(),
+					Receipt newReceipt = new Receipt(kindComboBox.getSelectedItem().toString(), receiptIdTextField.getText(),
 							dateTextField.getText(), amountTextField.getText(), companyTextField.getText(),
 							countryTextField.getText(), cityTextField.getText(), streetTextField.getText(), numberTextField.getText());
 					Database.getTaxpayerFromArrayList(taxpayerID).addReceiptToList(newReceipt);

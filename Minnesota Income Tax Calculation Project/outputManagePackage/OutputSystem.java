@@ -1,7 +1,5 @@
 package outputManagePackage;
 import dataManagePackage.*;
-import dataManagePackage.Receipt.Receipt;
-
 import java.awt.Dialog.ModalExclusionType;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
