@@ -37,7 +37,7 @@ public class InputSystem {
 		String taxpayerAFM = getParameterValueFromTxtFileLine(inputStream.nextLine(), "AFM: ");
 		String taxpayerStatus = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Status: ");
 		String taxpayerIncome = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Income: ");
-		Taxpayer newTaxpayer = new Taxpayer(taxpayerName, taxpayerAFM, taxpayerStatus, taxpayerIncome);
+		Taxpayer newTaxpayer = new Taxpayer(taxpayerName, taxpayerAFM, taxpayerIncome, taxpayerStatus);
 		
 		String fileLine;
 		while (inputStream.hasNextLine())
@@ -55,7 +55,7 @@ public class InputSystem {
 			String receiptCity = getParameterValueFromTxtFileLine(inputStream.nextLine(), "City: ");
 			String receiptStreet = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Street: ");
 			String receiptNumber = getParameterValueFromTxtFileLine(inputStream.nextLine(), "Number: ");
-			Receipt newReceipt = ReceiptFactory.createNewReceipt(receiptKind, receiptID, receiptDate, receiptAmount, receiptCompany, receiptCountry, receiptCity, receiptStreet, receiptNumber);
+			Receipt newReceipt = new Receipt(receiptKind, receiptID, receiptDate, receiptAmount, receiptCompany, receiptCountry, receiptCity, receiptStreet, receiptNumber);
 			
 			newTaxpayer.addReceiptToList(newReceipt);
 		}
@@ -83,7 +83,7 @@ public class InputSystem {
 		String taxpayerAFM = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<AFM> ", " </AFM>");
 		String taxpayerStatus = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<Status> ", " </Status>");
 		String taxpayerIncome = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<Income> ", " </Income>");
-		Taxpayer newTaxpayer = new Taxpayer(taxpayerName, taxpayerAFM, taxpayerStatus, taxpayerIncome);
+		Taxpayer newTaxpayer = new Taxpayer(taxpayerName, taxpayerAFM, taxpayerIncome, taxpayerStatus);
 		
 		String fileLine;
 		while (inputStream.hasNextLine())
@@ -102,7 +102,7 @@ public class InputSystem {
 			String receiptCity = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<City> ", " </City>");
 			String receiptStreet = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<Street> ", " </Street>");
 			String receiptNumber = getParameterValueFromXmlFileLine(inputStream.nextLine(), "<Number> ", " </Number>");
-			Receipt newReceipt = ReceiptFactory.createNewReceipt(receiptKind, receiptID, receiptDate, receiptAmount, receiptCompany, receiptCountry, receiptCity, receiptStreet, receiptNumber);
+			Receipt newReceipt = new Receipt(receiptKind, receiptID, receiptDate, receiptAmount, receiptCompany, receiptCountry, receiptCity, receiptStreet, receiptNumber);
 			
 			newTaxpayer.addReceiptToList(newReceipt);
 		}
