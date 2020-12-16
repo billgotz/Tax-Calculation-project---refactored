@@ -1,0 +1,16 @@
+/InputFileUpdater.class
+/InputFileUpdaterFactory.class
+/InputFileUpdaterTXT.class
+/InputFileUpdaterXML.class
+/OutputSystem.class
+/TaxPayerInfoWriter.class
+/TaxPayerInfoWriterFactory.class
+/TaxPayerInfoWriterTXT.class
+/TaxPayerInfoWriterXML.class
+/TemplateInputFileUpdater.class
+/TemplateTaxPayerInfoWriter.class
+/TaxpayerFreeChart.class
+/TemplateTaxpayerFreeChart.class
+/TaxpayerFreeChartFactory.class
+/TaxpayerFreeChartPIE.class
+/TaxpayerFreeChartBAR.class

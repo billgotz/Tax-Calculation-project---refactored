@@ -4,9 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 
-import dataManagePackage.Database;
-import dataManagePackage.Taxpayer;
-import dataManagePackage.Receipt.Receipt;
+import dataManagePackage.*;
+
 
 public abstract class TemplateInputFileUpdater implements InputFileUpdater {
 	

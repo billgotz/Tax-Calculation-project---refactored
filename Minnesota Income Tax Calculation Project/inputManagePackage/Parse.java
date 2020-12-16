@@ -9,6 +9,8 @@ import dataManagePackage.Receipt;
 import dataManagePackage.Taxpayer;
 
 public abstract class Parse {
+	
+	protected Database database = Database.getDatabase();
 		
 	public void loadTaxPayerData(String afmInfoFileFolderPath, String afmInfoFile) {
 		Scanner inputStream = null;
@@ -34,7 +36,7 @@ public abstract class Parse {
 			Receipt newReceipt = addReceipt(inputStream, fileLine);
 			newTaxpayer.addReceiptToList(newReceipt);
 		}
-		Database.addTaxpayerToList(newTaxpayer);
+		database.addTaxpayerToList(newTaxpayer);
 	}
 	
 	protected abstract Taxpayer addTaxpayer(Scanner inputStream);

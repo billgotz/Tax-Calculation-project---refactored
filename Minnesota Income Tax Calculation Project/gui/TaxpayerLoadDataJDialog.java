@@ -23,7 +23,7 @@ public class TaxpayerLoadDataJDialog extends JDialog {
 
 	private String afmInfoFilesFolderPath;
 	private JFrame appMainWindow;
-	
+	private Database database = Database.getDatabase();
 	
 	public TaxpayerLoadDataJDialog(JFrame appMainWindow) {
 		this.appMainWindow = appMainWindow;
@@ -82,9 +82,9 @@ public class TaxpayerLoadDataJDialog extends JDialog {
 					
 					int dialogResult = JOptionPane.showConfirmDialog (null, confirmDialogText, "Επιβεβαίωση", JOptionPane.YES_NO_OPTION);
 					if(dialogResult == JOptionPane.YES_OPTION){
-						Database.proccessTaxpayersDataFromFilesIntoDatabase(afmInfoFilesFolderPath, afmInfoFilesListToLoad);
+						database.proccessTaxpayersDataFromFilesIntoDatabase(afmInfoFilesFolderPath, afmInfoFilesListToLoad);
 						JLabel totalLoadedTaxpayersJLabel = (JLabel)appMainWindow.getContentPane().getComponent(1);
-						totalLoadedTaxpayersJLabel.setText(Integer.toString(Database.getTaxpayersArrayListSize()));
+						totalLoadedTaxpayersJLabel.setText(Integer.toString(database.getTaxpayersArrayListSize()));
 						
 						dispose();
 					}

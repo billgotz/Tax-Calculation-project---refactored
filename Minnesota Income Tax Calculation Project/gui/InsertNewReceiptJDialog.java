@@ -19,6 +19,7 @@ import java.awt.event.KeyEvent;
 public class InsertNewReceiptJDialog extends JDialog {
 
 	private int taxpayerID;
+	private Database database = Database.getDatabase();
 	
 	
 	public InsertNewReceiptJDialog(int taxpayerID) {
@@ -187,9 +188,9 @@ public class InsertNewReceiptJDialog extends JDialog {
 					Receipt newReceipt = new Receipt(kindComboBox.getSelectedItem().toString(), receiptIdTextField.getText(),
 							dateTextField.getText(), amountTextField.getText(), companyTextField.getText(),
 							countryTextField.getText(), cityTextField.getText(), streetTextField.getText(), numberTextField.getText());
-					Database.getTaxpayerFromArrayList(taxpayerID).addReceiptToList(newReceipt);
+					database.getTaxpayerFromArrayList(taxpayerID).addReceiptToList(newReceipt);
 					
-					Database.updateTaxpayerInputFile(taxpayerID);
+					database.updateTaxpayerInputFile(taxpayerID);
 					
 					dispose();
 				}else{

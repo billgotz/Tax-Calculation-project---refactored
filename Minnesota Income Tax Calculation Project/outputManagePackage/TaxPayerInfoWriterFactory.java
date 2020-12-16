@@ -8,7 +8,7 @@ public class TaxPayerInfoWriterFactory {
 			case "txt":
 				return new TaxPayerInfoWriterTXT();
 			case "xml":
-				return new TaxPayerInfoWriterTXT();
+				return new TaxPayerInfoWriterXML();
 			default:
 				System.out.println(extension + ": Wrong argument TaxPayerInfoWriterFactory");
 				return null;

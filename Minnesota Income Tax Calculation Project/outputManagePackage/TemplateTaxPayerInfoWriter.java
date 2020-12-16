@@ -1,7 +1,5 @@
 package outputManagePackage;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.PrintWriter;
 
 import javax.swing.JOptionPane;
@@ -12,20 +10,16 @@ import dataManagePackage.Taxpayer;
 public abstract class TemplateTaxPayerInfoWriter implements TaxPayerInfoWriter {
 	
 	protected PrintWriter outputStream = null;
+	protected Taxpayer taxpayer;
 	
 	public void saveTaxPayerInfo(String folderSavePath, int taxPayerIndex) {
 		
 		Database database = Database.getDatabase();
-		Taxpayer taxpayer = database.getTaxpayerFromArrayList(taxPayerIndex);
-
-		try
-		{
-			outputStream = new PrintWriter(new FileOutputStream(folderSavePath+"//"+taxpayer.getAFM()+"_LOG.txt"));
-		}
-		catch(FileNotFoundException e)
-		{
-			System.out.println("Problem opening: "+folderSavePath+"//"+taxpayer.getAFM()+"_LOG.txt");
-		}
+		taxpayer = database.getTaxpayerFromArrayList(taxPayerIndex);
+		
+		outputStream = createOutputStream(folderSavePath);
+		
+		
 		writeOutputLine("Name", taxpayer.getName());
 		writeOutputLine("AFM", taxpayer.getAFM());
 		writeOutputLine("Income", taxpayer.getIncome());
@@ -38,11 +32,11 @@ public abstract class TemplateTaxPayerInfoWriter implements TaxPayerInfoWriter {
 		}
 		writeOutputLine("Total Tax", taxpayer.getTotalTax());
 		writeOutputLine("Total Receipts Amount", taxpayer.getTotalReceiptsAmount());
-		writeOutputLine("Entertainment", taxpayer.getEntertainmentReceiptsTotalAmount());
-		writeOutputLine("Basic", taxpayer.getBasicReceiptsTotalAmount());
-		writeOutputLine("Travel", taxpayer.getTravelReceiptsTotalAmount());
-		writeOutputLine("Health", taxpayer.getHealthReceiptsTotalAmount());
-		writeOutputLine("Other", taxpayer.getOtherReceiptsTotalAmount());
+		writeOutputLine("Entertainment", taxpayer.getReceiptAmount("Entertainment"));
+		writeOutputLine("Basic", taxpayer.getReceiptAmount("Basic"));
+		writeOutputLine("Travel", taxpayer.getReceiptAmount("Travel"));
+		writeOutputLine("Health", taxpayer.getReceiptAmount("Health"));
+		writeOutputLine("Other", taxpayer.getReceiptAmount("Other"));
 		
 		outputStream.close();
 		
@@ -50,6 +44,8 @@ public abstract class TemplateTaxPayerInfoWriter implements TaxPayerInfoWriter {
 	
 	}
 	
+	protected abstract PrintWriter createOutputStream(String folderSavePath);
+
 	protected abstract void writeOutputLine(String title, double value);
 	protected abstract void writeOutputLine(String title, String value);
 }
