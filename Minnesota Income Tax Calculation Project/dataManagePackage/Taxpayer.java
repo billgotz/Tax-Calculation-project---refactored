@@ -14,6 +14,8 @@ public class Taxpayer {
 	private FamilyStatus familyStatus;
 	private ArrayList<Receipt> receipts;
 	
+	private final double MIN_TAX_RATE = 0.535;
+
 	public Taxpayer(String name, String afm, String income, String status){
 		this.name = name;
 		this.afm = afm;
@@ -28,8 +30,6 @@ public class Taxpayer {
 	private void setBasicTaxBasedOnFamilyStatus(){
 		basicTax = calculateTax(income);
 	}
-	
-	private final double MIN_TAX_RATE = 0.535;
     
     public double calculateTax(double totalIncome){
         double tax;
