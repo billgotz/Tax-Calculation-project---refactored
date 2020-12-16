@@ -1,5 +1,6 @@
 package outputManagePackage;
 import dataManagePackage.*;
+import dataManagePackage.Receipt.Receipt;
 import java.awt.Dialog.ModalExclusionType;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -18,9 +19,28 @@ import org.jfree.data.general.DefaultPieDataset;
 
 public class OutputSystem {
 	
+	private static OutputSystem outputSystemInstance;
+	
+	private TaxPayerInfoWriterFactory infoWriterFactory;
+	
 	private static DefaultPieDataset receiptPieChartDataset;
 	private static JFreeChart receiptPieJFreeChart;
 	private static PiePlot piePlot;
+	
+	private static Database database = Database.getDatabase();
+	
+	private OutputSystem() {
+		infoWriterFactory = new TaxPayerInfoWriterFactory();
+		
+	}
+	
+	public static OutputSystem getOutputSystem() {
+		if (outputSystemInstance == null)
+			outputSystemInstance = new OutputSystem();
+		
+		return outputSystemInstance;
+	}
+	
 	
 	public static DefaultPieDataset getReceiptPieChartDataset() {
 		return receiptPieChartDataset;
@@ -51,7 +71,7 @@ public class OutputSystem {
 			System.out.println("Problem opening: "+filePath);
 		}
 		
-		Taxpayer taxpayer = Database.getTaxpayerFromArrayList(taxpayerIndex);
+		Taxpayer taxpayer = database.getTaxpayerFromArrayList(taxpayerIndex);
 		outputStream.println("Name: "+taxpayer.getName());
 		outputStream.println("AFM: "+taxpayer.getAFM());
 		outputStream.println("Status: "+taxpayer.getFamilyStatus());
@@ -90,10 +110,10 @@ public class OutputSystem {
 			System.out.println("Problem opening: "+filePath);
 		}
 		
-		Taxpayer taxpayer = Database.getTaxpayerFromArrayList(taxpayerIndex);
+		Taxpayer taxpayer = database.getTaxpayerFromArrayList(taxpayerIndex);
 		outputStream.println("<Name> "+taxpayer.getName()+" </Name>");
 		outputStream.println("<AFM> "+taxpayer.getAFM()+" </AFM>");
-		//outputStream.println("<Status> "+taxpayer.getFamilyStatus()+" </Status>");
+		outputStream.println("<Status> "+taxpayer.getFamilyStatus()+" </Status>");
 		outputStream.println("<Income> "+taxpayer.getIncome()+" </Income>");
 		
 		if (taxpayer.getReceiptsArrayList().size() > 0){
@@ -120,94 +140,26 @@ public class OutputSystem {
 		outputStream.close();
 	}
 	
-	
-	
-	public static void saveTaxpayerInfoToTxtLogFile(String folderSavePath, int taxpayerIndex){
-		Taxpayer taxpayer = Database.getTaxpayerFromArrayList(taxpayerIndex);
-		
-		PrintWriter outputStream = null;
-		try
-		{
-			outputStream = new PrintWriter(new FileOutputStream(folderSavePath+"//"+taxpayer.getAFM()+"_LOG.txt"));
-		}
-		catch(FileNotFoundException e)
-		{
-			System.out.println("Problem opening: "+folderSavePath+"//"+taxpayer.getAFM()+"_LOG.txt");
-		}
-		
-		outputStream.println("Name: "+taxpayer.getName());
-		outputStream.println("AFM: "+taxpayer.getAFM());
-		outputStream.println("Income: "+taxpayer.getIncome());
-		outputStream.println("Basic Tax: "+taxpayer.getBasicTax());
-		if (taxpayer.getTaxInxrease()!=0){
-			outputStream.println("Tax Increase: "+taxpayer.getTaxInxrease());
-		}else{
-			outputStream.println("Tax Decrease: "+taxpayer.getTaxDecrease());
-		}
-		outputStream.println("Total Tax: "+taxpayer.getTotalTax());
-		outputStream.println("Total Receipts Amount: "+taxpayer.getTotalReceiptsAmount());
-		outputStream.println("Entertainment: "+taxpayer.getReceiptAmount("Entertainment"));
-		outputStream.println("Basic: "+taxpayer.getReceiptAmount("Basic"));
-		outputStream.println("Travel: "+taxpayer.getReceiptAmount("Travel"));
-		outputStream.println("Health: "+taxpayer.getReceiptAmount("Health"));
-		outputStream.println("Other: "+taxpayer.getReceiptAmount("Other"));
-		
-		outputStream.close();
-		
-		JOptionPane.showMessageDialog(null, "Η αποθήκευση ολοκληρώθηκε", "Μήνυμα", JOptionPane.INFORMATION_MESSAGE);
-	}
-	
-	public static void saveTaxpayerInfoToXmlLogFile(String folderSavePath, int taxpayerIndex){
-		Taxpayer taxpayer = Database.getTaxpayerFromArrayList(taxpayerIndex);
-		
-		PrintWriter outputStream = null;
-		try
-		{
-			outputStream = new PrintWriter(new FileOutputStream(folderSavePath+"//"+taxpayer.getAFM()+"_LOG.xml"));
-		}
-		catch(FileNotFoundException e)
-		{
-			System.out.println("Problem opening: "+folderSavePath+"//"+taxpayer.getAFM()+"_LOG.xml");
-		}
-		
-		outputStream.println("<Name> "+taxpayer.getName()+" </Name>");
-		outputStream.println("<AFM> "+taxpayer.getAFM()+" </AFM>");
-		outputStream.println("<Income> "+taxpayer.getIncome()+" </Income>");
-		outputStream.println("<BasicTax> "+taxpayer.getBasicTax()+" </BasicTax>");
-		if (taxpayer.getTaxInxrease()!=0){
-			outputStream.println("<TaxIncrease> "+taxpayer.getTaxInxrease()+" </TaxIncrease>");
-		}else{
-			outputStream.println("<TaxDecrease> "+taxpayer.getTaxDecrease()+" </TaxDecrease>");
-		}
-		outputStream.println("<TotalTax> "+taxpayer.getTotalTax()+" </TotalTax>");
-		outputStream.println("<Receipts> "+taxpayer.getTotalReceiptsAmount()+" </Receipts>");
-		outputStream.println("<Entertainment> "+taxpayer.getReceiptAmount("Entertainment")+" </Entertainment>");
-		outputStream.println("<Basic> "+taxpayer.getReceiptAmount("Basic")+" </Basic>");
-		outputStream.println("<Travel> "+taxpayer.getReceiptAmount("Travel")+" </Travel>");
-		outputStream.println("<Health> "+taxpayer.getReceiptAmount("Health")+" </Health>");
-		outputStream.println("<Other> "+taxpayer.getReceiptAmount("Other")+" </Other>");
-		
-		outputStream.close();
-		
-		JOptionPane.showMessageDialog(null, "Η αποθήκευση ολοκληρώθηκε", "Μήνυμα", JOptionPane.INFORMATION_MESSAGE);
+	public void saveTaxPayerInfoToOutputFile(String extension, String folderSavePath, int taxPayerIndex) {
+		infoWriterFactory.create(extension).saveTaxPayerInfo(folderSavePath, taxPayerIndex);
 	}
 	
 	public static void createTaxpayerReceiptsPieJFreeChart(int taxpayerIndex){
 		receiptPieChartDataset = new DefaultPieDataset();
-		Taxpayer taxpayer = Database.getTaxpayerFromArrayList(taxpayerIndex);
+		Taxpayer taxpayer = database.getTaxpayerFromArrayList(taxpayerIndex);
 		
-		receiptPieChartDataset.setValue("Basic", taxpayer.getReceiptAmount("Basic"));
-		receiptPieChartDataset.setValue("Entertainment", taxpayer.getReceiptAmount("Entertainment"));
-		receiptPieChartDataset.setValue("Travel", taxpayer.getReceiptAmount("Travel"));
-		receiptPieChartDataset.setValue("Health", taxpayer.getReceiptAmount("Health"));
-		receiptPieChartDataset.setValue("Other", taxpayer.getReceiptAmount("Other"));
+		receiptPieChartDataset.setValue("Basic", taxpayer.getBasicReceiptsTotalAmount());
+		receiptPieChartDataset.setValue("Entertainment", taxpayer.getEntertainmentReceiptsTotalAmount());
+		receiptPieChartDataset.setValue("Travel", taxpayer.getTravelReceiptsTotalAmount());
+		receiptPieChartDataset.setValue("Health", taxpayer.getHealthReceiptsTotalAmount());
+		receiptPieChartDataset.setValue("Other", taxpayer.getOtherReceiptsTotalAmount());
 		
 		receiptPieJFreeChart = ChartFactory.createPieChart("Receipt Pie Chart", receiptPieChartDataset);
 		piePlot = (PiePlot)receiptPieJFreeChart.getPlot();
 		PieSectionLabelGenerator generator = new StandardPieSectionLabelGenerator("{0}: {1}$ ({2})", new DecimalFormat("0.00"), new DecimalFormat("0.00%"));
 		piePlot.setLabelGenerator(generator); 
 
-		receiptPieChartFrame = new ChartFrame(Database.getTaxpayerNameAfmValuesPairList(taxpayerIndex), receiptPieJFreeChart);
+		receiptPieChartFrame = new ChartFrame(database.getTaxpayerNameAfmValuesPairList(taxpayerIndex), receiptPieJFreeChart);
 		receiptPieChartFrame.pack();
 		receiptPieChartFrame.setResizable(false);
 		receiptPieChartFrame.setLocationRelativeTo(null);
@@ -217,7 +169,7 @@ public class OutputSystem {
 	
 	public static void createTaxpayerTaxAnalysisBarJFreeChart(int taxpayerIndex){
 		DefaultCategoryDataset taxAnalysisBarChartDataset = new DefaultCategoryDataset();
-		Taxpayer taxpayer = Database.getTaxpayerFromArrayList(taxpayerIndex);
+		Taxpayer taxpayer = database.getTaxpayerFromArrayList(taxpayerIndex);
 		
 		String taxVariationType = taxpayer.getTaxInxrease()!=0? "Tax Increase" : "Tax Decrease";
 		double taxVariationAmount = taxpayer.getTaxInxrease()!=0? taxpayer.getTaxInxrease() : taxpayer.getTaxDecrease()*(-1);
@@ -228,7 +180,7 @@ public class OutputSystem {
 
 		JFreeChart taxAnalysisJFreeChart = ChartFactory.createBarChart("Tax Analysis Bar Chart", "",  "Tax Analysis in $", taxAnalysisBarChartDataset, PlotOrientation.VERTICAL, true, true, false);
 
-		ChartFrame receiptPieChartFrame = new ChartFrame(Database.getTaxpayerNameAfmValuesPairList(taxpayerIndex), taxAnalysisJFreeChart);
+		ChartFrame receiptPieChartFrame = new ChartFrame(database.getTaxpayerNameAfmValuesPairList(taxpayerIndex), taxAnalysisJFreeChart);
 		receiptPieChartFrame.pack();
 		receiptPieChartFrame.setResizable(false);
 		receiptPieChartFrame.setLocationRelativeTo(null);
