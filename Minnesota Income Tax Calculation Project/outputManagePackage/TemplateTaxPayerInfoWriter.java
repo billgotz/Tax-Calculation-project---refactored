@@ -25,8 +25,8 @@ public abstract class TemplateTaxPayerInfoWriter implements TaxPayerInfoWriter {
 		writeOutputLine("Income", taxpayer.getIncome());
 		writeOutputLine("Basic Tax", taxpayer.getBasicTax());
 		
-		if (taxpayer.getTaxInxrease()!=0){
-			writeOutputLine("Tax Increase", taxpayer.getTaxInxrease());
+		if (taxpayer.getTaxIncrease()!=0){
+			writeOutputLine("Tax Increase", taxpayer.getTaxIncrease());
 		}else{
 			writeOutputLine("Tax Decrease", taxpayer.getTaxDecrease());
 		}

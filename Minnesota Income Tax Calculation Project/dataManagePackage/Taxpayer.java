@@ -129,7 +129,7 @@ public class Taxpayer {
 		return (new BigDecimal(basicTax).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 	}
 	
-	public double getTaxInxrease(){
+	public double getTaxIncrease(){
 		return (new BigDecimal(taxIncrease).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 	}
 	
@@ -172,6 +172,7 @@ public class Taxpayer {
 		}
 		else{
 			taxDecrease = basicTax * 0.30;
+
 		}
 		
 		totalTax = basicTax + taxIncrease - taxDecrease;

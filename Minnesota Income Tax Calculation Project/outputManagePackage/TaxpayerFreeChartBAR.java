@@ -12,8 +12,8 @@ public class TaxpayerFreeChartBAR extends TemplateTaxpayerFreeChart {
 	protected ChartFrame createChartFrame(int taxpayerIndex) {
 		DefaultCategoryDataset taxAnalysisBarChartDataset = new DefaultCategoryDataset();
 		
-		String taxVariationType = taxpayer.getTaxInxrease()!=0? "Tax Increase" : "Tax Decrease";
-		double taxVariationAmount = taxpayer.getTaxInxrease()!=0? taxpayer.getTaxInxrease() : taxpayer.getTaxDecrease()*(-1);
+		String taxVariationType = taxpayer.getTaxIncrease()!=0? "Tax Increase" : "Tax Decrease";
+		double taxVariationAmount = taxpayer.getTaxIncrease()!=0? taxpayer.getTaxIncrease() : taxpayer.getTaxDecrease()*(-1);
 		
 		taxAnalysisBarChartDataset.setValue(taxpayer.getBasicTax(), "Tax", "Basic Tax");
 		taxAnalysisBarChartDataset.setValue(taxVariationAmount, "Tax", taxVariationType);
