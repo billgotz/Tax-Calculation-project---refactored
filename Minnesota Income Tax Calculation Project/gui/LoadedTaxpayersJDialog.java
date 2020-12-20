@@ -146,6 +146,7 @@ public class LoadedTaxpayersJDialog extends JDialog {
 			public void actionPerformed(ActionEvent arg0) {
 				if (loadedTaxpayersJList.getSelectedIndex()!=-1){
 					TaxpayerReceiptsManagementJDialog taxpayerReceiptsManagementJDialog = new TaxpayerReceiptsManagementJDialog(loadedTaxpayersJList.getSelectedValue().toString(), loadedTaxpayersJList.getSelectedIndex());
+					System.out.println(loadedTaxpayersJList.getSelectedIndex());
 					taxpayerReceiptsManagementJDialog.fillTaxpayerReceiptsJList();
 					taxpayerReceiptsManagementJDialog.setVisible(true);
 				}

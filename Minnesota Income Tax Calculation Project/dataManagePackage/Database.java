@@ -15,7 +15,9 @@ public class Database {
 	
 	private static String taxpayersInfoFilesPath;
 	private static ArrayList<Taxpayer> taxpayersArrayList = new ArrayList<Taxpayer>();
+	
 	private OutputSystem outputSystem;
+	
 	private Database() {
 		outputSystem = OutputSystem.getOutputSystem();
 	}
